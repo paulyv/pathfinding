@@ -29,7 +29,7 @@ public class Window extends JFrame {
 
 	}
 	
-private class panel extends JPanel implements ActionListener{
+private class panel extends JPanel implements ActionListener {
        
 		Timer t = new Timer(150, this);
 		int iter = 0;
@@ -51,6 +51,7 @@ private class panel extends JPanel implements ActionListener{
             			}
             	}
             }
+            
             // Draw full path
             for(Node n : FindPath.closedList) {
             	int i = n.getRow();

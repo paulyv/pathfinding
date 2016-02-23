@@ -6,7 +6,7 @@ public class FindPath {
 	
 	public static ArrayList<Node> closedList = new ArrayList<Node>();
 	private ArrayList<Node> neighbourList = new ArrayList<Node>();
-	private Dist calc = new Dist();
+	private Dist calcDist = new Dist();
 	private Node start;
 	private Node end;
 	private int[][] map;
@@ -25,9 +25,11 @@ public class FindPath {
 	moveBestToClosedList(neighbourList);
 	
 	do {
+		
 	populateNeighboursList(closedList.get(closedList.size() -1));
 	calculateDistances(neighbourList);
 	moveBestToClosedList(neighbourList);
+	
 	} while((closedList.get(closedList.size() -1).getRow() != end.getRow()) || (closedList.get(closedList.size() -1).getCol() != end.getCol()));
 	
 	// print closed list when done
@@ -75,8 +77,8 @@ public class FindPath {
 
 	private void calculateDistances(ArrayList<Node> list) {
 		for(Node node : list) {
-			node.setDistToGoal(calc.calculateManhattanDistGoal(node.getCol(), end.getCol(), node.getRow(), end.getRow()));
-			node.setDistToStart(calc.calculateManhattanDistHome(node.getCol(), start.getCol(), node.getRow(), start.getRow()));
+			node.setDistToGoal(calcDist.calculateManhattanDist(node.getCol(), end.getCol(), node.getRow(), end.getRow()));
+			node.setDistToStart(calcDist.calculateManhattanDist(node.getCol(), start.getCol(), node.getRow(), start.getRow()));
 		}
 	}
 	
@@ -92,8 +94,8 @@ public class FindPath {
 	private void moveBestToClosedList(ArrayList<Node> list){
 		int row = 0;
 		int col = 0;
-		int distGoal = 10000000;
-		int distHome = 10000000;
+		int distGoal = Integer.MAX_VALUE;
+		int distHome = Integer.MAX_VALUE;
 		
 		for(Node node : list) {
 			if(node.getDistToGoal() <= distGoal && findDuplicate(node, closedList) == false) {
